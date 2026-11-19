@@ -3,21 +3,101 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<meta name="color-scheme" content="dark">
+<title>Neon Coast Studio · Cover Maker</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
-  </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
-</main>
+<div class="app" id="app">
+  <aside class="sidebar">
+    <header class="brand">
+      <span class="brand-sun" aria-hidden="true"></span>
+      <div class="brand-copy">
+        <h1>Neon Coast</h1>
+        <p>Cover Studio</p>
+      </div>
+      <span class="offline">OFFLINE</span>
+    </header>
+    <div class="controls">
+      <section class="group">
+        <div class="group-head"><h2>Caption</h2><span>01</span></div>
+        <label class="field" for="caption"><span>Title</span>
+          <input id="caption" type="text" maxlength="42" value="Neon Coast" autocomplete="off" spellcheck="false">
+        </label>
+        <label class="field" for="subtitle"><span>Neon script</span>
+          <input id="subtitle" type="text" maxlength="46" value="a neon coast story" autocomplete="off" spellcheck="false">
+        </label>
+      </section>
+
+      <section class="group">
+        <div class="group-head"><h2>Post size</h2><span>02</span></div>
+        <div id="sizes" class="size-grid"></div>
+      </section>
+
+      <section class="group">
+        <div class="group-head"><h2>Selected panel</h2><span id="panelLabel">01 / 04</span></div>
+        <div id="grades" class="grade-grid"></div>
+        <label class="field range-field" for="gradeStrength">
+          <span>Grade strength <b id="gradeStrengthValue">88%</b></span>
+          <input id="gradeStrength" type="range" min="0" max="100" step="1" value="88">
+        </label>
+        <label class="field range-field" for="zoom">
+          <span>Zoom <b id="zoomValue">100%</b></span>
+          <input id="zoom" type="range" min="1" max="3.5" step="0.01" value="1">
+        </label>
+        <div class="crop-actions">
+          <button id="centerPhoto" class="ghost" type="button">Centre</button>
+          <button id="resetCrop" class="ghost" type="button">Reset crop</button>
+        </div>
+        <p class="mini-note">Click a panel in the preview. Drag to move, scroll or slide to zoom.</p>
+      </section>
+
+      <section class="group">
+        <div class="group-head"><h2>Layout</h2><span>03</span></div>
+        <div id="layouts" class="layout-grid"></div>
+      </section>
+
+      <section class="group">
+        <div class="group-head"><h2>Photos</h2><span>05</span></div>
+        <div class="photo-actions">
+          <label class="upload" for="photoInput">Add photos</label>
+          <input id="photoInput" type="file" accept="image/*" multiple hidden>
+          <button id="fillAll" class="ghost" type="button">Use on all panels</button>
+        </div>
+        <div id="photoList" class="photo-list"></div>
+        <p class="mini-note">Click a photo to place it on the selected panel.</p>
+      </section>
+    </div>
+    <footer class="export-bar">
+      <button id="export" class="export" type="button">
+        <span>Export PNG</span>
+        <small>PNG · OFFLINE</small>
+      </button>
+      <p id="status" class="status" role="status">Your photos never leave this machine.</p>
+    </footer>
+  </aside>
+
+  <main class="workspace">
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <span class="live"><i></i>LIVE PREVIEW</span>
+        <span id="dims" class="dims">1080 × 1080</span>
+        <div class="history">
+          <button id="undo" class="tool-btn" type="button" disabled>Undo</button>
+          <button id="redo" class="tool-btn" type="button" disabled>Redo</button>
+        </div>
+      </div>
+      <span class="tip">Click a panel to select · Drag to crop · Scroll to zoom</span>
+    </div>
+    <div class="stage" id="stage">
+      <canvas id="cover" width="1080" height="1080" aria-label="Live cover preview"></canvas>
+    </div>
+    <div class="panel-tray">
+      <span class="tray-label">PANELS</span>
+      <div id="panelBar" class="panel-bar"></div>
+    </div>
+  </main>
+</div>
 <script type="module" src="./src/main.js"></script>
 </body>
 </html>

@@ -18,6 +18,9 @@ import { buildDossier } from './vendor/makefun-app.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+const ENTRY = 'Neon Coast Studio · gta6-cover-art-01';
+
+console.log(`make.fun entry: ${ENTRY}`);
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
